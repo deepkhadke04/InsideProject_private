@@ -34,7 +34,7 @@ function LoginPage() {
             console.log('Password:', password);
 
             try {
-                const response = await fetch('https://localhost:7037/api/user/UserLogin/CheckLogin', {
+                const response = await fetch('https://localhost:7072/api/UserManagement/CheckLogin', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ userName: username, password: password }),
@@ -129,6 +129,12 @@ function LoginPage() {
                 </form>
                 <div className="text-center mt-3">
                     <Link to="/forgot-password" className="text-muted">Forgot Password?</Link>
+                </div>
+                <div className="text-center mt-3">
+                    <Link to="/registercustomer" className="text-muted">Doesn't have a account? Create New</Link>
+                </div>
+                <div className="text-center mt-3">
+                    <Link to="/registerseller" className="text-muted">Want to sell products? Click here</Link>
                 </div>
             </div>
         </div>

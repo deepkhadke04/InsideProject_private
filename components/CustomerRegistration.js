@@ -1,6 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
-//import './CustomerRegistration.css'; // Ensure to create and import this CSS file
+import { useNavigate } from 'react-router-dom';
 import './CSS/cr.css';
 
 function CustomerRegistration() {
@@ -82,7 +81,7 @@ function CustomerRegistration() {
                 break;
             case "Adhaar":
                 if (!value) error = "Adhaar number is required";
-                else if (!(value.length === 8)) error = "Please enter a valid Adhaar number";
+                else if (!(value.length === 12)) error = "Please enter a valid Adhaar number";
                 break;
             case "UserName":
                 if (!value) error = "Username is required";
@@ -92,7 +91,7 @@ function CustomerRegistration() {
                 if (!value) {
                     error = "Password is required";
                 } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
-                    error = "Password must be 6-12 characters long and contain at least one capital letter, one small letter, and '@'";
+                    error = "Password must be atleast 8 characters long and contain at least one capital letter, one small letter, and '@' and one number";
                 }
                 break;
             case "ConfirmPassword":
@@ -132,7 +131,8 @@ function CustomerRegistration() {
             user: {
                 UserName: formData.UserName,
                 Password: formData.Password,
-                roleId: 3
+                roleId: 3,
+                ActiveStatus: 1
             }
         };
 
@@ -143,7 +143,7 @@ function CustomerRegistration() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToSend)
         };
-        fetch('https://localhost:7037/api/CustomerLogin/SaveCustomer', reqdata)
+        fetch('https://localhost:7072/api/CustomerManagement/SaveCustomer', reqdata)
             .then(response => {
                 if (!response.ok) {
                     return response.json().then(error => {

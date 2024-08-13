@@ -1,12 +1,13 @@
-import SellerHeader from "./SellerHeader";
+import Header from "./Header";
 
 
-function SellerHome()
+function SellerHome(props,username)
 {
     return(<div>
 
-        <SellerHeader/>
+        <Header/>
         <h1>Seller Home</h1>
+        <h2>Welcome {username}</h2>
 
     </div>)
 }

@@ -1,11 +1,14 @@
-import CustHeader from "./CustHeader";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from "./Header";
 
-function CustomerHome()
+function CustomerHome() 
 {
-    return(<div>
-        <CustHeader/>
-        <h1>Welcome Customer</h1>
+  return(<div>
 
-    </div>)
+    <Header/>
+    <h1>Welcome Customer</h1>
+
+  </div>)
 }
+
 export default CustomerHome;

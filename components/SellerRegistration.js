@@ -57,7 +57,7 @@ function SellerRegister() {
                 break;
             case "GSTNO":
                 if (!value) error = "GST number is required";
-                else if (!/^\d{8}$/.test(value)) error = "GST number must be exactly 15 digits";
+                else if (!/^\d{15}$/.test(value)) error = "GST number must be exactly 15 digits";
                 break;
             case "UserName":
                 if (!value) error = "Username is required";
@@ -67,7 +67,7 @@ function SellerRegister() {
                 if (!value) {
                     error = "Password is required";
                 } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
-                    error = "Password must be 6-12 characters long and contain at least one capital letter, one small letter, and '@'";
+                    error = "Password must be atleast 8 characters long and contain at least one capital letter, one small letter, and '@'and one number";
                 }
                 break;
             case "ConfirmPassword":
@@ -88,6 +88,12 @@ function SellerRegister() {
         return allValid;
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        dispatch({ type: 'update', fld: name, val: value });
+        validateField(name, value);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -106,7 +112,8 @@ function SellerRegister() {
             user: {
                 UserName: formData.UserName,
                 Password: formData.Password,
-                roleId: 2
+                roleId: 2,
+                ActiveStatus: 1
             }
         };
 
@@ -117,7 +124,7 @@ function SellerRegister() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToSend)
         };
-        fetch('https://localhost:7037/api/SellerLogin/SaveSeller', reqdata)
+        fetch('https://localhost:7072/api/SellerManagement/SaveSeller', reqdata)
             .then(response => {
                 if (!response.ok) {
                     return response.json().then(error => {
@@ -139,136 +146,128 @@ function SellerRegister() {
 
     return (
         <div id="sell" className="d-flex align-items-center justify-content-center vh-200">
-          <div className="card shadow p-4 w-50 mt-4 mb-4">
-            <form onSubmit={handleSubmit}>
-                <h2 className="mb-4">Seller Registration</h2>
-                
-                <div className="form-group mb-3">
-                    <label htmlFor="SellerName">Seller Name</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="SellerName"
-                        name="SellerName" 
-                        value={formData.SellerName}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'SellerName', val: e.target.value })}
-                        onBlur={(e) => validateField("SellerName", e.target.value)}
-                    />
-                    {errors.SellerName && <div className='text-danger'>{errors.SellerName}</div>}
-                </div>
+            <div className="card shadow p-4 w-50 mt-4 mb-4">
+                <form onSubmit={handleSubmit}>
+                    <h2 className="mb-4">Seller Registration</h2>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="Email">Email</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="Email"
-                        name="Email" 
-                        value={formData.Email}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'Email', val: e.target.value })}
-                        onBlur={(e) => validateField("Email", e.target.value)}
-                    />
-                    {errors.Email && <div className='text-danger'>{errors.Email}</div>}
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="SellerName">Seller Name</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="SellerName"
+                            name="SellerName" 
+                            value={formData.SellerName}
+                            onChange={handleInputChange}
+                        />
+                        {errors.SellerName && <div className='text-danger'>{errors.SellerName}</div>}
+                    </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="Contact">Contact</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="Contact"
-                        name="Contact" 
-                        value={formData.Contact}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'Contact', val: e.target.value })}
-                        onBlur={(e) => validateField("Contact", e.target.value)}
-                    />
-                    {errors.Contact && <div className='text-danger'>{errors.Contact}</div>}
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="Email">Email</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="Email"
+                            name="Email" 
+                            value={formData.Email}
+                            onChange={handleInputChange}
+                        />
+                        {errors.Email && <div className='text-danger'>{errors.Email}</div>}
+                    </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="Address">Address</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="Address"
-                        name="Address" 
-                        value={formData.Address}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'Address', val: e.target.value })}
-                        onBlur={(e) => validateField("Address", e.target.value)}
-                    />
-                    {errors.Address && <div className='text-danger'>{errors.Address}</div>}
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="Contact">Contact</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="Contact"
+                            name="Contact" 
+                            value={formData.Contact}
+                            onChange={handleInputChange}
+                        />
+                        {errors.Contact && <div className='text-danger'>{errors.Contact}</div>}
+                    </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="GSTNO">GST Number</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="GSTNO"
-                        name="GSTNO" 
-                        value={formData.GSTNO}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'GSTNO', val: e.target.value })}
-                        onBlur={(e) => validateField("GSTNO", e.target.value)}
-                    />
-                    {errors.GSTNO && <div className='text-danger'>{errors.GSTNO}</div>}
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="Address">Address</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="Address"
+                            name="Address" 
+                            value={formData.Address}
+                            onChange={handleInputChange}
+                        />
+                        {errors.Address && <div className='text-danger'>{errors.Address}</div>}
+                    </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="UserName">Username</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="UserName"
-                        name="UserName"
-                        value={formData.UserName}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'UserName', val: e.target.value })} 
-                        onBlur={(e) => validateField("UserName", e.target.value)}
-                    />
-                    {errors.UserName && <div className='text-danger'>{errors.UserName}</div>}
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="GSTNO">GST Number</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="GSTNO"
+                            name="GSTNO" 
+                            value={formData.GSTNO}
+                            onChange={handleInputChange}
+                        />
+                        {errors.GSTNO && <div className='text-danger'>{errors.GSTNO}</div>}
+                    </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="Password">Password</label>
-                    <input 
-                        type={passwordType} 
-                        className="form-control" 
-                        id="Password"
-                        name="Password"
-                        value={formData.Password}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'Password', val: e.target.value })} 
-                        onBlur={(e) => validateField("Password", e.target.value)}
-                    />
-                    {errors.Password && <div className='text-danger'>{errors.Password}</div>}
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="UserName">Username</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="UserName"
+                            name="UserName"
+                            value={formData.UserName}
+                            onChange={handleInputChange}
+                        />
+                        {errors.UserName && <div className='text-danger'>{errors.UserName}</div>}
+                    </div>
 
-                <div className="form-group mb-3">
-                    <label htmlFor="ConfirmPassword">Confirm Password</label>
-                    <input 
-                        type={passwordType} 
-                        className="form-control" 
-                        id="ConfirmPassword"
-                        name="ConfirmPassword"
-                        value={formData.ConfirmPassword}
-                        onChange={(e) => dispatch({ type: 'update', fld: 'ConfirmPassword', val: e.target.value })} 
-                        onBlur={(e) => validateField("ConfirmPassword", e.target.value)}
-                    />
-                    {errors.ConfirmPassword && <div className='text-danger'>{errors.ConfirmPassword}</div>}
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="Password">Password</label>
+                        <input 
+                            type={passwordType} 
+                            className="form-control" 
+                            id="Password"
+                            name="Password"
+                            value={formData.Password}
+                            onChange={handleInputChange}
+                        />
+                        {errors.Password && <div className='text-danger'>{errors.Password}</div>}
+                    </div>
 
-                <div className="form-check mb-3">
-                    <input 
-                        type='checkbox' 
-                        className="form-check-input"
-                        id="showPasswordCheckbox"
-                        checked={passwordType !== 'password'} 
-                        onChange={togglePassword} 
-                    />
-                    <label className='form-check-label' htmlFor="showPasswordCheckbox">Show Password</label>
-                </div>
+                    <div className="form-group mb-3">
+                        <label htmlFor="ConfirmPassword">Confirm Password</label>
+                        <input 
+                            type={passwordType} 
+                            className="form-control" 
+                            id="ConfirmPassword"
+                            name="ConfirmPassword"
+                            value={formData.ConfirmPassword}
+                            onChange={handleInputChange}
+                        />
+                        {errors.ConfirmPassword && <div className='text-danger'>{errors.ConfirmPassword}</div>}
+                    </div>
 
-                <button type="submit" className="btn btn-primary">Register</button>
-            </form>
-        </div>
+                    <div className="form-check mb-3">
+                        <input 
+                            type='checkbox' 
+                            className="form-check-input"
+                            id="showPasswordCheckbox"
+                            checked={passwordType !== 'password'} 
+                            onChange={togglePassword} 
+                        />
+                        <label className='form-check-label' htmlFor="showPasswordCheckbox">Show Password</label>
+                    </div>
+
+                    <button type="submit" className="btn btn-primary">Register</button>
+                </form>
+            </div>
         </div>
     );
 }

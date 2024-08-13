@@ -95,6 +95,46 @@ function HomePage() {
                         </Card>
                     </Col>
                 </Row>
+
+                <Row className='mt-4'>
+                    <Col md={4}>
+                        <Card>
+                            <Card.Img variant="top" src={p3} />
+                            <Card.Body>
+                                <Card.Title>Football</Card.Title>
+                                <Card.Text>
+                                    Premium sports accessories to enhance your game.
+                                </Card.Text>
+                                <Button variant="primary">View Details</Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col md={4}>
+                        <Card>
+                            <Card.Img variant="top" src={p1} />
+                            <Card.Body>
+                                <Card.Title>Cricket</Card.Title>
+                                <Card.Text>
+                                    High-quality sports gear designed for performance.
+                                </Card.Text>
+                                <Button variant="primary">View Details</Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col md={4}>
+                        <Card>
+                            <Card.Img variant="top" src={p2} />
+                            <Card.Body>
+                                <Card.Title>Badmintion</Card.Title>
+                                <Card.Text>
+                                    Stay ahead with our latest collection of sportswear.
+                                </Card.Text>
+                                <Button variant="primary">View Details</Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    
+                </Row>
             </Container>
 
             {/* Promo Section */}
@@ -113,6 +153,8 @@ function HomePage() {
                 </Container>
             </Container>
         </div>
+
+        
     );
 }
 
