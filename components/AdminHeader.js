@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import "./CSS/header.css";
 
-function SellerHeader() {
+function AdminHeader() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -19,15 +19,15 @@ function SellerHeader() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
-                        <Nav.Link as={Link} to="/sellerhome">
+                        <Nav.Link as={Link} to="/adminhome">
                             <i className="bi bi-house-door"></i> Home
                         </Nav.Link>
                         <Nav.Link as={Link} to="/addproducts">
-                            <i className="bi bi-bag-check"></i> Add Products
+                            <i className="bi bi-bag-check"></i> View Products
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/orders">
+                        {/*<Nav.Link as={Link} to="/orders">
                             <i className="bi bi-bag-check-fill"></i> My Products
-                        </Nav.Link>
+                        </Nav.Link>*/}
                         <Nav.Link onClick={handleLogout}>
                             <i className="bi bi-box-arrow-left"></i> Logout
                         </Nav.Link>
@@ -38,4 +38,4 @@ function SellerHeader() {
     );
 }
 
-export default SellerHeader;
+export default AdminHeader;

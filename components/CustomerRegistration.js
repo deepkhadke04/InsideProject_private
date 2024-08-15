@@ -62,10 +62,12 @@ function CustomerRegistration() {
             case "CustomerFname":
                 if (!value) error = "First Name is required";
                 else if (value.length < 2) error = "First name must be at least 2 characters";
+                else if(!/^[A-Z]{1}[a-z]{1,}$/.test(value)) error = "First letter should be capital";
                 break;
             case "CustomerLname":
                 if (!value) error = "Last Name is required";
                 else if (value.length < 2) error = "Last name must be at least 2 characters";
+                else if(!/^[A-Z]{1}[a-z]{1,}$/.test(value)) error = "First letter should be capital";
                 break;
             case "Address":
                 if (!value) error = "Address is required";
@@ -107,7 +109,7 @@ function CustomerRegistration() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+    
         let hasErrors = false;
         Object.keys(formData).forEach(field => {
             validateField(field, formData[field]);
@@ -115,12 +117,21 @@ function CustomerRegistration() {
                 hasErrors = true;
             }
         });
-
+    
+        // Check if any form field is empty or has errors
+        for (const field in formData) {
+            if (!formData[field] || formErrors[field]) {
+                hasErrors = true;
+                break;
+            }
+        }
+    
         if (hasErrors) {
-            alert("Please fix errors before submitting");
+            alert("Please fill all fields before submitting");
             return;
         }
-
+    
+        // Construct dataToSend only if there are no errors
         const dataToSend = {
             CustomerFname: formData.CustomerFname,
             CustomerLname: formData.CustomerLname,
@@ -135,14 +146,15 @@ function CustomerRegistration() {
                 ActiveStatus: 1
             }
         };
-
-        alert(JSON.stringify(dataToSend));
-
+    
+        //alert(JSON.stringify(dataToSend));
+    
         const reqdata = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataToSend)
         };
+    
         fetch('https://localhost:7072/api/CustomerManagement/SaveCustomer', reqdata)
             .then(response => {
                 if (!response.ok) {
@@ -158,7 +170,8 @@ function CustomerRegistration() {
                 navigate("/login");
             })
             .catch(error => {
-                alert("Registration failed:" + error.message);
+                alert("Registration failed: username already exists!")
+                //alert("Registration failed:" + error.message);
                 console.error('Error:', error);
             });
     };

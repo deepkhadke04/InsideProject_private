@@ -45,16 +45,20 @@ function LoginPage() {
 
                 if (response.ok) {
                     setSuccessMessage('Login successful! Redirecting...');
+                    localStorage.setItem("LoggedUser",JSON.stringify(data));
+                    localStorage.setItem('userName', data.userName);
+                    localStorage.setItem('userId',data.userId);
+                    console.log("data : ",JSON.stringify(data));
                     setTimeout(() => {
                         switch (data.roleId) {
                             case 1:
-                                navigate('/AdminHome');
+                                navigate('/adminhome');
                                 break;
                             case 2:
-                                navigate('/SellerHome');
+                                navigate('/sellerhome');
                                 break;
                             case 3:
-                                navigate('/CustomerHome');
+                                navigate('/customerhome');
                                 break;
                             default:
                                 setError({ general: data.message || 'Login failed' });
@@ -66,7 +70,7 @@ function LoginPage() {
                 }
             } catch (error) {
                 console.error('Error:', error);
-                setError({ general: "An unexpected error occurred" });
+                setError({ general: "Server not responding please try again later" });
             } finally {
                 setUsername('');
                 setPassword('');
@@ -127,9 +131,9 @@ function LoginPage() {
                         <button type="submit" className="btn btn-primary">Login</button>
                     </div>
                 </form>
-                <div className="text-center mt-3">
+                {/*<div className="text-center mt-3">
                     <Link to="/forgot-password" className="text-muted">Forgot Password?</Link>
-                </div>
+                </div>*/}
                 <div className="text-center mt-3">
                     <Link to="/registercustomer" className="text-muted">Doesn't have a account? Create New</Link>
                 </div>

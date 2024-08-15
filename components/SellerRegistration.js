@@ -42,6 +42,7 @@ function SellerRegister() {
             case "SellerName":
                 if (!value) error = "Seller name is required";
                 else if (value.length < 2) error = "Seller name must be at least 2 characters";
+                else if(!/^[A-Z]{1}[a-z]{1,}$/.test(value)) error = "First letter should be capital";
                 break;
             case "Email":
                 if (!value) error = "Email is required";
@@ -117,7 +118,7 @@ function SellerRegister() {
             }
         };
 
-        alert(JSON.stringify(dataToSend));
+        //alert(JSON.stringify(dataToSend));
 
         const reqdata = {
             method: 'POST',
@@ -139,7 +140,7 @@ function SellerRegister() {
                 navigate("/login");
             })
             .catch(error => {
-                alert("Registration failed: " + error.message);
+                alert("Registration failed: username already exsists!");
                 console.error('Error:', error);
             });
     };

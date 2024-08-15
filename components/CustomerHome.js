@@ -1,14 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from "./Header";
+import { useEffect, useState } from 'react';
+import CustHeader from './CustHeader';
+import ProductList from './Products';
 
-function CustomerHome() 
-{
-  return(<div>
+function CustomerHome() {
+  const [username, setUsername] = useState('');
 
-    <Header/>
-    <h1>Welcome Customer</h1>
+  useEffect(() => {
+    // Retrieve the username from localStorage
+    const storedUsername = localStorage.getItem('userName');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
-  </div>)
+  return (
+    <div>
+      <CustHeader/>
+      <h1>Welcome, {username}</h1>
+      <ProductList/>
+    </div>
+  );
 }
 
 export default CustomerHome;

@@ -14,7 +14,7 @@ function CustHeader() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
-                        <Nav.Link as={Link} to="/home">
+                        <Nav.Link as={Link} to="/customerhome">
                             <i className="bi bi-house-door"></i> Home
                         </Nav.Link>
                         <Nav.Link as={Link} to="/cart">
