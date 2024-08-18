@@ -127,7 +127,7 @@ function CustomerRegistration() {
         }
     
         if (hasErrors) {
-            alert("Please fill all fields before submitting");
+            alert("Please fill all fields correctly before submitting");
             return;
         }
     
@@ -170,7 +170,7 @@ function CustomerRegistration() {
                 navigate("/login");
             })
             .catch(error => {
-                alert("Registration failed: username already exists!")
+                alert("Registration failed: username or email or contact or aadhar number already exists!")
                 //alert("Registration failed:" + error.message);
                 console.error('Error:', error);
             });

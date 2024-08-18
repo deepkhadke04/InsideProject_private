@@ -1,20 +1,20 @@
 
 #login{
-  background-image: url('../images/bg2.jpg'); 
+ /* background-image: url('../images/bg2.jpg'); */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 
 #cust{
-  background-image: url('../images/bg1.jpg'); 
+  /*background-image: url('../images/bg1.jpg'); */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 
 #sell{
-  background-image: url('../images/bg1.jpg'); 
+ /* background-image: url('../images/bg1.jpg'); */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

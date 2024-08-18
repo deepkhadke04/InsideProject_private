@@ -1,10 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import "./CSS/header.css";
 
 function CustHeader() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/home');
+    };
+
     return (
 
 
@@ -23,7 +30,10 @@ function CustHeader() {
                         <Nav.Link as={Link} to="/orders">
                             <i className="bi bi-archive"></i> Orders
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/home">
+                        <Nav.Link as={Link} to="/custprofile">
+                            <i className="bi bi-person"></i> Profile
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/home" onClick={handleLogout}>
                             <i className="bi bi-box-arrow-left"></i> Logout
                         </Nav.Link>
                     </Nav>
